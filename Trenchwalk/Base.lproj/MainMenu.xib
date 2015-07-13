@@ -694,7 +694,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoState" id="Q8E-7g-hLU"/>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoState" id="chA-wU-Pcr"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLT-AQ-thb">
@@ -714,30 +714,6 @@
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8gy-hn-MPD">
-                        <rect key="frame" x="71" y="105" width="37" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="vwQ-ld-OdD">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoTargetPosition" id="VKk-5s-EV6"/>
-                        </connections>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MO3-So-TeC">
-                        <rect key="frame" x="78" y="130" width="37" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="yLc-9J-9iD">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                        <connections>
-                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoCurrentPosition" id="bno-B5-meM"/>
-                        </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imw-Zk-po5">
                         <rect key="frame" x="14" y="13" width="92" height="32"/>
@@ -762,6 +738,41 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
+                    <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ioC-Ke-0nI">
+                        <rect key="frame" x="166" y="104" width="296" height="20"/>
+                        <animations/>
+                        <sliderCell key="cell" state="on" alignment="left" minValue="-10000" maxValue="10000" tickMarkPosition="above" sliderType="linear" id="prO-xA-kAN"/>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="3rc-iv-Rnj"/>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoTargetPosition" id="GO6-RU-Rnr"/>
+                        </connections>
+                    </slider>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrq-fJ-Wja">
+                        <rect key="frame" x="80" y="102" width="80" height="22"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="500,000" drawsBackground="YES" id="fVm-wd-k0O">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="FOo-DI-vGD"/>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="X39-M5-1b1"/>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoTargetPosition" id="0pt-sy-55u"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MO3-So-TeC">
+                        <rect key="frame" x="82" y="130" width="114" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="yLc-9J-9iD">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoCurrentPosition" id="bno-B5-meM"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>

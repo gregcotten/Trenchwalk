@@ -38,13 +38,12 @@
     self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
     self.serialPort.delegate = self;
     [self.serialPort setBaudRate:@(MocoJoServoBaudRate)];//this actually doesn't matter - teensy always communicates at USB 2.0 speeds
-
     self.servoState = [NSString stringWithFormat:@"Connecting to %@...", self.serialPort.path];
     self.servoID = MocoAxisJibLift;
     [self.serialPort open];
 }
 
--(void)handshakeServo{
+-(void)handshakeServo:(NSTimer *)timer{
     self.servoState = @"Handshaking...";
 
     NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoInitializeRequest)]];
@@ -123,18 +122,30 @@
 -(void)setServoTargetPosition:(NSInteger)servoTargetPosition{
     _servoTargetPosition = servoTargetPosition;
 
-//    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoSetTargetPosition)]];
-//    ORSSerialRequest *request =
-//    [ORSSerialRequest requestWithDataToSend:command
-//                                   userInfo:@(MocoJoServoSetTargetPosition)
-//                            timeoutInterval:2
-//                          responseEvaluator:nil];
-//    [self.serialPort sendRequest:request];
+    if (self.didInitialize && self.serialPort.isOpen) {
+        Byte *targetAsBytes = (Byte *)[self.class fourBytesFromLongInt:self.servoTargetPosition].bytes;
+        NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID),
+                                                                 @(MocoJoServoSetTargetPosition),
+                                                                 @(targetAsBytes[0]),
+                                                                 @(targetAsBytes[1]),
+                                                                 @(targetAsBytes[2]),
+                                                                 @(targetAsBytes[3])]];
+        ORSSerialRequest *request =
+        [ORSSerialRequest requestWithDataToSend:command
+                                       userInfo:@(MocoJoServoSetTargetPosition)
+                                timeoutInterval:2
+                              responseEvaluator:nil];
+        [self.serialPort sendRequest:request];
+    }
 }
 
 -(void)serialPortWasOpened:(nonnull ORSSerialPort *)serialPort{
-    sleep(5);
-    [self handshakeServo];
+    //wait 5 seconds then talk to servo
+    [NSTimer scheduledTimerWithTimeInterval:5
+                                     target:self
+                                   selector:@selector(handshakeServo:)
+                                   userInfo:nil
+                                    repeats:NO];
 }
 
 - (void)disconnect{
@@ -186,7 +197,7 @@
                 + (fourBytes[3] ) );
 }
 
-+ (NSData *)longIntAsFourBytes: (long int)longInt {
++ (NSData *)fourBytesFromLongInt: (long int)longInt {
     unsigned char byteArray[4];
 
     // convert from an unsigned long int to a 4-byte array
