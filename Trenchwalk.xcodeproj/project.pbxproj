@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85F8E9E096264E1E66EDC9C5 /* libPods-Trenchwalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A7DB6C713A26395976049A3 /* libPods-Trenchwalk.a */; };
 		F21C877D1B53432500142F91 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F21C877C1B53432500142F91 /* AppDelegate.m */; };
 		F21C87801B53432500142F91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F21C877F1B53432500142F91 /* main.m */; };
 		F21C87821B53432500142F91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F21C87811B53432500142F91 /* Assets.xcassets */; };
@@ -14,6 +15,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3CC020DF22FF54C5D0D9C221 /* Pods-Trenchwalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trenchwalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trenchwalk/Pods-Trenchwalk.debug.xcconfig"; sourceTree = "<group>"; };
+		6A7DB6C713A26395976049A3 /* libPods-Trenchwalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trenchwalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D723C3DA864BFD3FB0416D5D /* Pods-Trenchwalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trenchwalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trenchwalk/Pods-Trenchwalk.release.xcconfig"; sourceTree = "<group>"; };
 		F21C87781B53432500142F91 /* Trenchwalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trenchwalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F21C877B1B53432500142F91 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		F21C877C1B53432500142F91 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -28,17 +32,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F8E9E096264E1E66EDC9C5 /* libPods-Trenchwalk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C80CBF9666A185953C3CF2E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6A7DB6C713A26395976049A3 /* libPods-Trenchwalk.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F21C876F1B53432500142F91 = {
 			isa = PBXGroup;
 			children = (
 				F21C877A1B53432500142F91 /* Trenchwalk */,
 				F21C87791B53432500142F91 /* Products */,
+				F35F6F3921840C552A8BF1E2 /* Pods */,
+				C80CBF9666A185953C3CF2E5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,6 +86,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		F35F6F3921840C552A8BF1E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3CC020DF22FF54C5D0D9C221 /* Pods-Trenchwalk.debug.xcconfig */,
+				D723C3DA864BFD3FB0416D5D /* Pods-Trenchwalk.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -78,9 +102,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F21C87891B53432500142F91 /* Build configuration list for PBXNativeTarget "Trenchwalk" */;
 			buildPhases = (
+				EF46EB10B9C5618AFA9BAAF6 /* Check Pods Manifest.lock */,
 				F21C87741B53432500142F91 /* Sources */,
 				F21C87751B53432500142F91 /* Frameworks */,
 				F21C87761B53432500142F91 /* Resources */,
+				1D2F4E8AA64264AC4489ED52 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -134,6 +160,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1D2F4E8AA64264AC4489ED52 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trenchwalk/Pods-Trenchwalk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EF46EB10B9C5618AFA9BAAF6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F21C87741B53432500142F91 /* Sources */ = {
@@ -240,6 +299,7 @@
 		};
 		F21C878A1B53432500142F91 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CC020DF22FF54C5D0D9C221 /* Pods-Trenchwalk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -252,6 +312,7 @@
 		};
 		F21C878B1B53432500142F91 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D723C3DA864BFD3FB0416D5D /* Pods-Trenchwalk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -281,6 +342,7 @@
 				F21C878B1B53432500142F91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
