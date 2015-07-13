@@ -12,6 +12,7 @@
 		F21C87801B53432500142F91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F21C877F1B53432500142F91 /* main.m */; };
 		F21C87821B53432500142F91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F21C87811B53432500142F91 /* Assets.xcassets */; };
 		F21C87851B53432500142F91 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F21C87831B53432500142F91 /* MainMenu.xib */; };
+		F2E24A9C1B53468D000C51BA /* ServoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E24A9B1B53468D000C51BA /* ServoController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,12 @@
 		F21C87811B53432500142F91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F21C87841B53432500142F91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F21C87861B53432500142F91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F2E24A9A1B53468D000C51BA /* ServoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServoController.h; sourceTree = "<group>"; };
+		F2E24A9B1B53468D000C51BA /* ServoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServoController.m; sourceTree = "<group>"; };
+		F2E24A9D1B534842000C51BA /* MocoJoServoCommunication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MocoJoServoCommunication.cpp; sourceTree = "<group>"; };
+		F2E24A9E1B534842000C51BA /* MocoJoServoCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MocoJoServoCommunication.h; sourceTree = "<group>"; };
+		F2E24A9F1B534842000C51BA /* MocoJoServoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MocoJoServoProtocol.h; sourceTree = "<group>"; };
+		F2E24AA11B5350C0000C51BA /* MocoProtocolConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MocoProtocolConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +81,12 @@
 				F21C87831B53432500142F91 /* MainMenu.xib */,
 				F21C87861B53432500142F91 /* Info.plist */,
 				F21C877E1B53432500142F91 /* Supporting Files */,
+				F2E24A9A1B53468D000C51BA /* ServoController.h */,
+				F2E24A9B1B53468D000C51BA /* ServoController.m */,
+				F2E24A9D1B534842000C51BA /* MocoJoServoCommunication.cpp */,
+				F2E24A9E1B534842000C51BA /* MocoJoServoCommunication.h */,
+				F2E24AA11B5350C0000C51BA /* MocoProtocolConstants.h */,
+				F2E24A9F1B534842000C51BA /* MocoJoServoProtocol.h */,
 			);
 			path = Trenchwalk;
 			sourceTree = "<group>";
@@ -199,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2E24A9C1B53468D000C51BA /* ServoController.m in Sources */,
 				F21C87801B53432500142F91 /* main.m in Sources */,
 				F21C877D1B53432500142F91 /* AppDelegate.m in Sources */,
 			);
@@ -254,10 +268,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.10;
 			};
 			name = Debug;
 		};
@@ -291,9 +305,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = macosx;
+				SDKROOT = macosx10.10;
 			};
 			name = Release;
 		};
@@ -305,6 +319,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Trenchwalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = GC.Trenchwalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -318,6 +333,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Trenchwalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = GC.Trenchwalk;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
