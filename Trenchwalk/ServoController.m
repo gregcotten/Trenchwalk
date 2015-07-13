@@ -15,6 +15,8 @@
 
 @interface ServoController ()
 
+@property (strong) NSTimer *updateTimer;
+
 @end
 
 @implementation ServoController
@@ -23,9 +25,13 @@
     if (self = [super init]){
         self.servoState = @"Not Connected";
         self.isInPlayback = NO;
-        self.didHandshake = NO;
+        self.didInitialize = NO;
     }
     return self;
+}
+
+-(IBAction)connect:(id)sender{
+    [self openConnection];
 }
 
 -(void)openConnection{
@@ -67,11 +73,37 @@
                           responseEvaluator:nil];
     [self.serialPort sendRequest:request];
 
+    usleep(1000*500);
+    self.didInitialize = YES;
+    [self beginTimedUpdate];
     self.servoState = @"Idle";
 
 }
 
+-(BOOL)beginTimedUpdate{
+    if (self.updateTimer) {
+        return NO;
+    }
+    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.02f
+                                                        target:self
+                                                      selector:@selector(timedUpdate:)
+                                                      userInfo:nil
+                                                       repeats:YES];
+    return YES;
+}
 
+-(void)endTimedUpdate{
+    if (self.updateTimer) {
+        [self.updateTimer invalidate];
+    }
+    self.updateTimer = nil;
+}
+
+-(void)timedUpdate:(NSTimer*)timer{
+    if (self.serialPort.isOpen && self.didInitialize) {
+        [self updateCurrentPosition];
+    }
+}
 
 -(void)updateCurrentPosition{
     NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoGetCurrentPosition)]];
@@ -88,26 +120,39 @@
     [self.serialPort sendRequest:request];
 }
 
--(void)updateTargetPosition{
+-(void)setServoTargetPosition:(NSInteger)servoTargetPosition{
+    _servoTargetPosition = servoTargetPosition;
 
+//    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoSetTargetPosition)]];
+//    ORSSerialRequest *request =
+//    [ORSSerialRequest requestWithDataToSend:command
+//                                   userInfo:@(MocoJoServoSetTargetPosition)
+//                            timeoutInterval:2
+//                          responseEvaluator:nil];
+//    [self.serialPort sendRequest:request];
 }
 
-
-
-
 -(void)serialPortWasOpened:(nonnull ORSSerialPort *)serialPort{
-    self.servoState = @"Connected";
+    sleep(5);
     [self handshakeServo];
 }
 
--(void)serialPortWasRemovedFromSystem:(nonnull ORSSerialPort *)serialPort{
-    self.didHandshake = NO;
+- (void)disconnect{
+    self.servoState = @"Not Connected";
+    [self.serialPort close];
+    [self endTimedUpdate];
+
+    self.didInitialize = NO;
     self.isInPlayback = NO;
-    self.servoState = @"Disconnnected";
+}
+
+-(void)serialPortWasRemovedFromSystem:(nonnull ORSSerialPort *)serialPort{
+    [self disconnect];
 }
 
 -(void)serialPort:(nonnull ORSSerialPort *)serialPort requestDidTimeout:(nonnull ORSSerialRequest *)request{
-    NSLog(@"request timed out: %@", request.userInfo);
+    NSLog(@"request timed out: %@", request);
+    [self disconnect];
 }
 
 -(void)serialPort:(nonnull ORSSerialPort *)serialPort didEncounterError:(nonnull NSError *)error{
@@ -120,7 +165,6 @@
 
     if (requestID == MocoJoServoHandshakeRequest) {
         self.servoState = @"Handshake Success";
-        self.didHandshake = YES;
         [self initializeServo];
     }
     else if (requestID == MocoJoServoGetCurrentPosition) {
@@ -140,6 +184,18 @@
                 + (fourBytes[1] << 16)
                 + (fourBytes[2] << 8)
                 + (fourBytes[3] ) );
+}
+
++ (NSData *)longIntAsFourBytes: (long int)longInt {
+    unsigned char byteArray[4];
+
+    // convert from an unsigned long int to a 4-byte array
+    byteArray[0] = (int)((longInt >> 24) & 0xFF) ;
+    byteArray[1] = (int)((longInt >> 16) & 0xFF) ;
+    byteArray[2] = (int)((longInt >> 8) & 0XFF);
+    byteArray[3] = (int)((longInt & 0XFF));
+
+    return [NSData dataWithBytes:byteArray length:4];
 }
 
 +(NSData *)servoDataPacketFromArray:(NSArray *)array{

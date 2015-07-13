@@ -16,7 +16,7 @@
 @property (assign) NSInteger servoID;
 @property (strong) NSString *servoState;
 
-@property (assign) BOOL didHandshake;
+@property (assign) BOOL didInitialize;
 @property (assign) BOOL isInPlayback;
 
 @property (assign) NSInteger servoCurrentPosition;
