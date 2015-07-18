@@ -13,9 +13,22 @@
 #import "MocoJoServoProtocol.h"
 #import "MocoProtocolConstants.h"
 
+dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, dispatch_block_t block)
+{
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    if (timer)
+    {
+        dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, interval * NSEC_PER_SEC), interval * NSEC_PER_SEC, (1ull * NSEC_PER_SEC) / 10);
+        dispatch_source_set_event_handler(timer, block);
+        dispatch_resume(timer);
+    }
+    return timer;
+}
+
 @interface ServoController ()
 
-@property (strong) NSTimer *updateTimer;
+@property (strong) dispatch_queue_t timerSerialQueue;
+@property (strong) dispatch_source_t updateTimer;
 
 @end
 
@@ -26,18 +39,25 @@
         self.servoState = @"Not Connected";
         self.isInPlayback = NO;
         self.didInitialize = NO;
+        self.timerSerialQueue = dispatch_queue_create("Timer Serial Dispatch", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
 
 -(IBAction)connect:(id)sender{
+    [self closeConnection];
     [self openConnection];
+}
+
+-(IBAction)disconnect:(id)sender{
+    [self closeConnection];
 }
 
 -(void)openConnection{
     self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
     self.serialPort.delegate = self;
-    [self.serialPort setBaudRate:@(MocoJoServoBaudRate)];//this actually doesn't matter - teensy always communicates at USB 2.0 speeds
+    self.serialPort.allowsNonStandardBaudRates = YES;
+    self.serialPort.baudRate = @(MocoJoServoBaudRate);
     self.servoState = [NSString stringWithFormat:@"Connecting to %@...", self.serialPort.path];
     self.servoID = MocoAxisJibLift;
     [self.serialPort open];
@@ -46,7 +66,7 @@
 -(void)handshakeServo:(NSTimer *)timer{
     self.servoState = @"Handshaking...";
 
-    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoInitializeRequest)]];
+    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoHandshakeRequest)]];
     ORSSerialRequest *request =
     [ORSSerialRequest requestWithDataToSend:command
                                    userInfo:@(MocoJoServoHandshakeRequest)
@@ -72,7 +92,6 @@
                           responseEvaluator:nil];
     [self.serialPort sendRequest:request];
 
-    usleep(1000*500);
     self.didInitialize = YES;
     [self beginTimedUpdate];
     self.servoState = @"Idle";
@@ -83,22 +102,22 @@
     if (self.updateTimer) {
         return NO;
     }
-    self.updateTimer = [NSTimer scheduledTimerWithTimeInterval:.02f
-                                                        target:self
-                                                      selector:@selector(timedUpdate:)
-                                                      userInfo:nil
-                                                       repeats:YES];
+    
+    self.updateTimer = CreateDispatchTimer(.02f, self.timerSerialQueue, ^{
+        [self timedUpdate];
+    });
+    
     return YES;
 }
 
 -(void)endTimedUpdate{
     if (self.updateTimer) {
-        [self.updateTimer invalidate];
+        dispatch_source_cancel(self.updateTimer);
     }
     self.updateTimer = nil;
 }
 
--(void)timedUpdate:(NSTimer*)timer{
+-(void)timedUpdate{
     if (self.serialPort.isOpen && self.didInitialize) {
         [self updateCurrentPosition];
     }
@@ -108,7 +127,7 @@
     NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoGetCurrentPosition)]];
     ORSSerialRequest *request =
     [ORSSerialRequest requestWithDataToSend:command
-                                   userInfo:@(MocoJoServoHandshakeRequest)
+                                   userInfo:@(MocoJoServoGetCurrentPosition)
                             timeoutInterval:2
                           responseEvaluator:^BOOL(NSData *data) {
                               if (data.length != 6) {
@@ -116,7 +135,15 @@
                               }
                               return ((char *)data.bytes)[1] == MocoJoServoCurrentPosition;
                           }];
-    [self.serialPort sendRequest:request];
+    if ([[NSThread currentThread] isMainThread]) {
+        dispatch_async(self.timerSerialQueue, ^{
+            [self.serialPort sendRequest:request];
+        });
+    }
+    else{
+        [self.serialPort sendRequest:request];
+    }
+    
 }
 
 -(void)setServoTargetPosition:(NSInteger)servoTargetPosition{
@@ -135,20 +162,22 @@
                                        userInfo:@(MocoJoServoSetTargetPosition)
                                 timeoutInterval:2
                               responseEvaluator:nil];
-        [self.serialPort sendRequest:request];
+        dispatch_async(self.timerSerialQueue, ^{
+            [self.serialPort sendRequest:request];
+        });
     }
 }
 
 -(void)serialPortWasOpened:(nonnull ORSSerialPort *)serialPort{
     //wait 5 seconds then talk to servo
-    [NSTimer scheduledTimerWithTimeInterval:5
+    [NSTimer scheduledTimerWithTimeInterval:1
                                      target:self
                                    selector:@selector(handshakeServo:)
                                    userInfo:nil
                                     repeats:NO];
 }
 
-- (void)disconnect{
+- (void)closeConnection{
     self.servoState = @"Not Connected";
     [self.serialPort close];
     [self endTimedUpdate];
@@ -158,12 +187,12 @@
 }
 
 -(void)serialPortWasRemovedFromSystem:(nonnull ORSSerialPort *)serialPort{
-    [self disconnect];
+    [self closeConnection];
 }
 
 -(void)serialPort:(nonnull ORSSerialPort *)serialPort requestDidTimeout:(nonnull ORSSerialRequest *)request{
     NSLog(@"request timed out: %@", request);
-    [self disconnect];
+    [self closeConnection];
 }
 
 -(void)serialPort:(nonnull ORSSerialPort *)serialPort didEncounterError:(nonnull NSError *)error{
