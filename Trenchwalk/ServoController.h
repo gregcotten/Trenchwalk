@@ -19,7 +19,8 @@
 @property (assign) BOOL didInitialize;
 @property (assign) BOOL isInPlayback;
 
-@property (assign) NSInteger servoCurrentPosition;
-@property (assign, nonatomic) NSInteger servoTargetPosition;
+@property (assign) int32_t servoCurrentPosition;
+@property (assign) int32_t motorTargetSpeed;
+@property (assign, nonatomic) int32_t servoTargetPosition;
 
 @end

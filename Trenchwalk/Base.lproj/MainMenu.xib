@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8121.20" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8121.20"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -671,7 +672,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="167"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="167"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -703,7 +704,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="connect:" target="ABt-hI-Hoj" id="XAL-1R-hg4"/>
-                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.didInitialize" id="2hY-ZT-vA9"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isConnecting" id="XYP-DG-GEt">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.didInitialize" previousBinding="XYP-DG-GEt" id="gmc-OQ-mwL"/>
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="i6h-Yp-Bq0">
@@ -714,7 +720,7 @@
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ioC-Ke-0nI">
-                        <rect key="frame" x="166" y="104" width="296" height="21"/>
+                        <rect key="frame" x="166" y="104" width="296" height="20"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-10000" maxValue="10000" tickMarkPosition="above" sliderType="linear" id="prO-xA-kAN"/>
                         <connections>
@@ -750,6 +756,7 @@
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T6N-fX-Cvz">
                         <rect key="frame" x="14" y="13" width="110" height="32"/>
+                        <animations/>
                         <buttonCell key="cell" type="push" title="Disconnect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XRl-Ya-r11">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -784,10 +791,32 @@
                             <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoState" id="chA-wU-Pcr"/>
                         </connections>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ijr-Z0-bhN">
+                        <rect key="frame" x="153" y="80" width="115" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="XXR-MP-AJ5">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.motorTargetSpeed" id="BOw-cn-gDi"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ga2-5c-uhq">
+                        <rect key="frame" x="18" y="80" width="129" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target Motor Speed:" id="nHR-rq-NbM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>
             <point key="canvasLocation" x="265" y="233.5"/>
         </window>
+        <userDefaultsController representsSharedInstance="YES" id="MSF-rx-dtf"/>
     </objects>
 </document>
