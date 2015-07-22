@@ -56,7 +56,14 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 
 -(void)openConnection{
     self.isConnecting = YES;
-    self.serialPort = [ORSSerialPort serialPortWithPath:@"/dev/cu.usbserial-A6009AXX"];//(ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
+    //self.serialPort = [ORSSerialPort serialPortWithPath:@"/dev/cu.usbserial-A6009AXX"];
+    
+    self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
+    
+    if (!self.serialPort) {
+        NSBeep();
+        return;
+    }
     self.serialPort.delegate = self;
     self.serialPort.allowsNonStandardBaudRates = YES;
     self.serialPort.baudRate = @(MocoJoServoBaudRate);
@@ -106,7 +113,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
         return NO;
     }
     
-    self.updateTimer = CreateDispatchTimer(.02f, self.timerSerialQueue, ^{
+    self.updateTimer = CreateDispatchTimer(.05f, self.timerSerialQueue, ^{
         [self timedUpdate];
     });
     
@@ -122,12 +129,16 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 
 -(void)timedUpdate{
     if (self.serialPort.isOpen && self.didInitialize) {
-        [self updateCurrentPosition];
-        [self updateMotorTargetSpeed];
+        
+        dispatch_async(self.timerSerialQueue, ^{
+            [self.serialPort sendRequest:[self updateCurrentPositionRequest]];
+            [self.serialPort sendRequest:[self updateMotorTargetSpeedRequest]];
+            [self.serialPort sendRequest:[self updateServoWithTargetPositionRequest]];
+        });
     }
 }
 
--(void)updateCurrentPosition{
+-(ORSSerialRequest *)updateCurrentPositionRequest{
     NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoGetCurrentPosition)]];
     ORSSerialRequest *request =
     [ORSSerialRequest requestWithDataToSend:command
@@ -139,18 +150,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
                               }
                               return ((char *)data.bytes)[1] == MocoJoServoCurrentPosition;
                           }];
-    if ([[NSThread currentThread] isMainThread]) {
-        dispatch_async(self.timerSerialQueue, ^{
-            [self.serialPort sendRequest:request];
-        });
-    }
-    else{
-        [self.serialPort sendRequest:request];
-    }
+    return request;
     
 }
 
--(void)updateMotorTargetSpeed{
+-(ORSSerialRequest *)updateMotorTargetSpeedRequest{
     NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID), @(MocoJoServoGetMotorTargetSpeed)]];
     ORSSerialRequest *request =
     [ORSSerialRequest requestWithDataToSend:command
@@ -162,37 +166,30 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
                               }
                               return ((char *)data.bytes)[1] == MocoJoServoMotorTargetSpeed;
                           }];
-    if ([[NSThread currentThread] isMainThread]) {
-        dispatch_async(self.timerSerialQueue, ^{
-            [self.serialPort sendRequest:request];
-        });
-    }
-    else{
-        [self.serialPort sendRequest:request];
-    }
+    return request;
 
+}
+
+-(ORSSerialRequest *)updateServoWithTargetPositionRequest{
+    Byte *targetAsBytes = (Byte *)[self.class fourBytesFromLongInt:self.servoTargetPosition].bytes;
+    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID),
+                                                             @(MocoJoServoSetTargetPosition),
+                                                             @(targetAsBytes[0]),
+                                                             @(targetAsBytes[1]),
+                                                             @(targetAsBytes[2]),
+                                                             @(targetAsBytes[3])]];
+    ORSSerialRequest *request =
+    [ORSSerialRequest requestWithDataToSend:command
+                                   userInfo:@(MocoJoServoSetTargetPosition)
+                            timeoutInterval:2
+                          responseEvaluator:nil];
+    
+    return request;
+    
 }
 
 -(void)setServoTargetPosition:(int32_t)servoTargetPosition{
     _servoTargetPosition = servoTargetPosition;
-
-    if (self.didInitialize && self.serialPort.isOpen) {
-        Byte *targetAsBytes = (Byte *)[self.class fourBytesFromLongInt:self.servoTargetPosition].bytes;
-        NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID),
-                                                                 @(MocoJoServoSetTargetPosition),
-                                                                 @(targetAsBytes[0]),
-                                                                 @(targetAsBytes[1]),
-                                                                 @(targetAsBytes[2]),
-                                                                 @(targetAsBytes[3])]];
-        ORSSerialRequest *request =
-        [ORSSerialRequest requestWithDataToSend:command
-                                       userInfo:@(MocoJoServoSetTargetPosition)
-                                timeoutInterval:2
-                              responseEvaluator:nil];
-        dispatch_async(self.timerSerialQueue, ^{
-            [self.serialPort sendRequest:request];
-        });
-    }
 }
 
 -(void)serialPortWasOpened:(nonnull ORSSerialPort *)serialPort{
