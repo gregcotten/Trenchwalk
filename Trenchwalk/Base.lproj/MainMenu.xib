@@ -898,12 +898,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="startPlaybackButton:" target="VwU-mX-Bkf" id="vqr-89-J22"/>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="k1i-Hp-WiO" id="COz-gy-kWe"/>
                             <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="k1i-Hp-WiO">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="k1i-Hp-WiO" id="COz-gy-kWe"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mjm-dX-fTV">
@@ -915,12 +915,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="stopPlaybackButton:" target="VwU-mX-Bkf" id="PDH-Gb-ybf"/>
-                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="w5y-iS-ruJ"/>
                             <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="w5y-iS-ruJ" id="mXl-RK-jOV">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="w5y-iS-ruJ"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kq7-jl-O5I">
