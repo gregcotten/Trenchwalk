@@ -23,4 +23,7 @@
 @property (assign) int32_t motorTargetSpeed;
 @property (assign, nonatomic) int32_t servoTargetPosition;
 
+
+- (void)closeConnection;
+
 @end
