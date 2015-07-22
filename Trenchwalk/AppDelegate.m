@@ -7,10 +7,14 @@
 //
 
 #import "AppDelegate.h"
+#import "ServoController.h"
 
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet ServoController *servoController;
+
+
 @end
 
 @implementation AppDelegate
@@ -21,6 +25,7 @@
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+    [self.servoController closeConnection];
 }
 
 @end
