@@ -18,7 +18,17 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="ABt-hI-Hoj" customClass="ServoController"/>
+        <customObject id="ABt-hI-Hoj" customClass="ServoController">
+            <connections>
+                <outlet property="ownerWindow" destination="QvC-M9-y7g" id="jYv-DM-i5k"/>
+            </connections>
+        </customObject>
+        <customObject id="VwU-mX-Bkf" customClass="ServoPlaybackController">
+            <connections>
+                <outlet property="ownerWindow" destination="QvC-M9-y7g" id="OLr-R5-PgI"/>
+                <outlet property="servoController" destination="ABt-hI-Hoj" id="9op-f5-R33"/>
+            </connections>
+        </customObject>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Trenchwalk" id="1Xt-HY-uBw">
@@ -669,16 +679,16 @@
             </items>
         </menu>
         <window title="Trenchwalk" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="167"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="382"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="167"/>
+                <rect key="frame" x="0.0" y="0.0" width="480" height="382"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLT-AQ-thb">
-                        <rect key="frame" x="18" y="130" width="54" height="17"/>
+                        <rect key="frame" x="18" y="345" width="54" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Current:" id="pMQ-Bf-UWY">
                             <font key="font" metaFont="system"/>
@@ -687,7 +697,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6PI-oU-Ozl">
-                        <rect key="frame" x="18" y="105" width="47" height="17"/>
+                        <rect key="frame" x="18" y="320" width="47" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target:" id="w3x-uw-ZkB">
                             <font key="font" metaFont="system"/>
@@ -704,12 +714,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="connect:" target="ABt-hI-Hoj" id="XAL-1R-hg4"/>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.didInitialize" previousBinding="XYP-DG-GEt" id="gmc-OQ-mwL"/>
                             <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isConnecting" id="XYP-DG-GEt">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.didInitialize" previousBinding="XYP-DG-GEt" id="gmc-OQ-mwL"/>
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="i6h-Yp-Bq0">
@@ -719,17 +729,28 @@
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
+                    <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DcG-e2-H2v">
+                        <rect key="frame" x="0.0" y="214" width="483" height="5"/>
+                        <animations/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ioC-Ke-0nI">
-                        <rect key="frame" x="166" y="104" width="296" height="20"/>
+                        <rect key="frame" x="166" y="319" width="296" height="20"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-10000" maxValue="10000" tickMarkPosition="above" sliderType="linear" id="prO-xA-kAN"/>
                         <connections>
-                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="3rc-iv-Rnj"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="Zyf-AT-oTH">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                             <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoTargetPosition" id="GO6-RU-Rnr"/>
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrq-fJ-Wja">
-                        <rect key="frame" x="80" y="102" width="80" height="22"/>
+                        <rect key="frame" x="80" y="317" width="80" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="500,000" drawsBackground="YES" id="fVm-wd-k0O">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="FOo-DI-vGD"/>
@@ -738,12 +759,16 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
-                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="X39-M5-1b1"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="j5Z-wS-225">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
                             <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoTargetPosition" id="0pt-sy-55u"/>
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MO3-So-TeC">
-                        <rect key="frame" x="82" y="130" width="114" height="17"/>
+                        <rect key="frame" x="82" y="345" width="114" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="yLc-9J-9iD">
                             <font key="font" metaFont="system"/>
@@ -792,7 +817,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ijr-Z0-bhN">
-                        <rect key="frame" x="153" y="80" width="115" height="17"/>
+                        <rect key="frame" x="154" y="270" width="115" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="XXR-MP-AJ5">
                             <font key="font" metaFont="system"/>
@@ -804,7 +829,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ga2-5c-uhq">
-                        <rect key="frame" x="18" y="80" width="129" height="17"/>
+                        <rect key="frame" x="19" y="270" width="129" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target Motor Speed:" id="nHR-rq-NbM">
                             <font key="font" metaFont="system"/>
@@ -812,10 +837,188 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eDj-DI-Hkc">
+                        <rect key="frame" x="19" y="245" width="115" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Motor Max Speed:" id="8Ja-z0-juu">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CcB-u4-vY9">
+                        <rect key="frame" x="101" y="152" width="31" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Out:" id="hhQ-MQ-jWo">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTF-u6-O7Z">
+                        <rect key="frame" x="136" y="152" width="121" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="kvb-c2-Edc">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="VwU-mX-Bkf" name="value" keyPath="self.endPosition" id="ltc-Cy-BwU"/>
+                        </connections>
+                    </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UtD-cX-H4F">
+                        <rect key="frame" x="14" y="174" width="75" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Set In" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bxG-5A-AFw">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setStart:" target="VwU-mX-Bkf" id="w5W-1W-vVr"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h4K-ST-x1s">
+                        <rect key="frame" x="14" y="143" width="87" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Set Out" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sqe-GQ-aUA">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="setEnd:" target="VwU-mX-Bkf" id="73W-iw-Tvr"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oT-Ty-vPb">
+                        <rect key="frame" x="14" y="110" width="128" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Start Playback" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4iF-8v-cr9">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="startPlaybackButton:" target="VwU-mX-Bkf" id="vqr-89-J22"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="k1i-Hp-WiO">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="k1i-Hp-WiO" id="COz-gy-kWe"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mjm-dX-fTV">
+                        <rect key="frame" x="15" y="110" width="127" height="32"/>
+                        <animations/>
+                        <buttonCell key="cell" type="push" title="Stop Playback" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="udV-te-dcY">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="stopPlaybackButton:" target="VwU-mX-Bkf" id="PDH-Gb-ybf"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="w5y-iS-ruJ"/>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="w5y-iS-ruJ" id="mXl-RK-jOV">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kq7-jl-O5I">
+                        <rect key="frame" x="142" y="120" width="114" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Playback Duration" id="emw-Zi-Jao">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-2m-ZQM">
+                        <rect key="frame" x="262" y="117" width="61" height="22"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="10" drawsBackground="YES" id="KQ6-Cn-BD7">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="lae-6U-HQZ">
+                                <real key="minimum" value="2"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="DQS-m8-lEC">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="VwU-mX-Bkf" name="value" keyPath="self.playbackDurationInSeconds" id="ASR-nu-Nvh"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMd-vL-pcD">
+                        <rect key="frame" x="331" y="120" width="56" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="nXc-LH-y83">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4y-GK-JDM">
+                        <rect key="frame" x="139" y="245" width="79" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="rja-Mr-XfD">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.motorMaxSpeed" id="q48-b9-e4C"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5V-Ke-Aqw">
+                        <rect key="frame" x="20" y="295" width="71" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Difference:" id="9gm-BJ-pLf">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iIt-na-ON5">
+                        <rect key="frame" x="96" y="295" width="100" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="49c-bO-vCq">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.servoPositionDifference" id="FIx-gx-Dr6"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSi-YS-OMg">
+                        <rect key="frame" x="89" y="183" width="19" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="In:" id="xTd-bg-c0Z">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1z1-hi-vVR">
+                        <rect key="frame" x="112" y="183" width="88" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="h3k-9h-Xmh">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="VwU-mX-Bkf" name="value" keyPath="self.startPosition" id="6aa-8X-Afs"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>
-            <point key="canvasLocation" x="265" y="233.5"/>
+            <point key="canvasLocation" x="38" y="318"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="MSF-rx-dtf"/>
     </objects>

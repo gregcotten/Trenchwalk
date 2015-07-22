@@ -12,6 +12,9 @@
 		F21C87801B53432500142F91 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F21C877F1B53432500142F91 /* main.m */; };
 		F21C87821B53432500142F91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F21C87811B53432500142F91 /* Assets.xcassets */; };
 		F21C87851B53432500142F91 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F21C87831B53432500142F91 /* MainMenu.xib */; };
+		F24049F51B5F315A006A039E /* TrenchwalkValueTransformers.m in Sources */ = {isa = PBXBuildFile; fileRef = F24049F41B5F315A006A039E /* TrenchwalkValueTransformers.m */; };
+		F24049F91B5F32AA006A039E /* ServoPlaybackController.m in Sources */ = {isa = PBXBuildFile; fileRef = F24049F81B5F32AA006A039E /* ServoPlaybackController.m */; };
+		F24049FF1B5F4CE9006A039E /* VVApp.m in Sources */ = {isa = PBXBuildFile; fileRef = F24049FE1B5F4CE9006A039E /* VVApp.m */; };
 		F2E24A9C1B53468D000C51BA /* ServoController.m in Sources */ = {isa = PBXBuildFile; fileRef = F2E24A9B1B53468D000C51BA /* ServoController.m */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +29,12 @@
 		F21C87811B53432500142F91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F21C87841B53432500142F91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F21C87861B53432500142F91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F24049F31B5F315A006A039E /* TrenchwalkValueTransformers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrenchwalkValueTransformers.h; sourceTree = "<group>"; };
+		F24049F41B5F315A006A039E /* TrenchwalkValueTransformers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrenchwalkValueTransformers.m; sourceTree = "<group>"; };
+		F24049F71B5F32AA006A039E /* ServoPlaybackController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServoPlaybackController.h; sourceTree = "<group>"; };
+		F24049F81B5F32AA006A039E /* ServoPlaybackController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServoPlaybackController.m; sourceTree = "<group>"; };
+		F24049FD1B5F4CE9006A039E /* VVApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VVApp.h; sourceTree = "<group>"; };
+		F24049FE1B5F4CE9006A039E /* VVApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VVApp.m; sourceTree = "<group>"; };
 		F2E24A9A1B53468D000C51BA /* ServoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServoController.h; sourceTree = "<group>"; };
 		F2E24A9B1B53468D000C51BA /* ServoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServoController.m; sourceTree = "<group>"; };
 		F2E24A9D1B534842000C51BA /* MocoJoServoCommunication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MocoJoServoCommunication.cpp; sourceTree = "<group>"; };
@@ -75,18 +84,21 @@
 		F21C877A1B53432500142F91 /* Trenchwalk */ = {
 			isa = PBXGroup;
 			children = (
+				F24049FA1B5F3416006A039E /* Controllers */,
 				F21C877B1B53432500142F91 /* AppDelegate.h */,
 				F21C877C1B53432500142F91 /* AppDelegate.m */,
 				F21C87811B53432500142F91 /* Assets.xcassets */,
 				F21C87831B53432500142F91 /* MainMenu.xib */,
 				F21C87861B53432500142F91 /* Info.plist */,
 				F21C877E1B53432500142F91 /* Supporting Files */,
-				F2E24A9A1B53468D000C51BA /* ServoController.h */,
-				F2E24A9B1B53468D000C51BA /* ServoController.m */,
 				F2E24A9D1B534842000C51BA /* MocoJoServoCommunication.cpp */,
 				F2E24A9E1B534842000C51BA /* MocoJoServoCommunication.h */,
 				F2E24AA11B5350C0000C51BA /* MocoProtocolConstants.h */,
 				F2E24A9F1B534842000C51BA /* MocoJoServoProtocol.h */,
+				F24049F31B5F315A006A039E /* TrenchwalkValueTransformers.h */,
+				F24049F41B5F315A006A039E /* TrenchwalkValueTransformers.m */,
+				F24049FD1B5F4CE9006A039E /* VVApp.h */,
+				F24049FE1B5F4CE9006A039E /* VVApp.m */,
 			);
 			path = Trenchwalk;
 			sourceTree = "<group>";
@@ -97,6 +109,17 @@
 				F21C877F1B53432500142F91 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F24049FA1B5F3416006A039E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F2E24A9A1B53468D000C51BA /* ServoController.h */,
+				F2E24A9B1B53468D000C51BA /* ServoController.m */,
+				F24049F71B5F32AA006A039E /* ServoPlaybackController.h */,
+				F24049F81B5F32AA006A039E /* ServoPlaybackController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		F35F6F3921840C552A8BF1E2 /* Pods */ = {
@@ -212,8 +235,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F24049F91B5F32AA006A039E /* ServoPlaybackController.m in Sources */,
 				F2E24A9C1B53468D000C51BA /* ServoController.m in Sources */,
 				F21C87801B53432500142F91 /* main.m in Sources */,
+				F24049FF1B5F4CE9006A039E /* VVApp.m in Sources */,
+				F24049F51B5F315A006A039E /* TrenchwalkValueTransformers.m in Sources */,
 				F21C877D1B53432500142F91 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

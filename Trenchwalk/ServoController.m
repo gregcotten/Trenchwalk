@@ -9,6 +9,9 @@
 #import "ServoController.h"
 #import <ORSSerialPort/ORSSerialPortManager.h>
 #import <ORSSerialPort/ORSSerialRequest.h>
+#import <Cocoa/Cocoa.h>
+
+#import "VVApp.h"
 
 #import "MocoJoServoProtocol.h"
 #import "MocoProtocolConstants.h"
@@ -27,9 +30,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 
 @interface ServoController ()
 
+@property (weak) IBOutlet NSWindow *ownerWindow;
 @property (strong) dispatch_queue_t timerSerialQueue;
 @property (strong) dispatch_source_t updateTimer;
 @property (assign) BOOL isConnecting;
+@property (assign) BOOL didReceiveFirstPosition;
 
 @end
 
@@ -40,7 +45,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
         self.servoState = @"Not Connected";
         self.isInPlayback = NO;
         self.didInitialize = NO;
-        self.timerSerialQueue = dispatch_queue_create("Timer Serial Dispatch", DISPATCH_QUEUE_SERIAL);
+        self.timerSerialQueue = dispatch_queue_create("Servo Timer Serial Dispatch", DISPATCH_QUEUE_SERIAL);
     }
     return self;
 }
@@ -61,7 +66,6 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
     
     if (!self.serialPort) {
-        NSBeep();
         return;
     }
     self.serialPort.delegate = self;
@@ -69,6 +73,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     self.serialPort.baudRate = @(MocoJoServoBaudRate);
     self.servoState = [NSString stringWithFormat:@"Connecting to %@...", self.serialPort.path];
     self.servoID = MocoAxisJibLift;
+    self.didReceiveFirstPosition = NO;
     [self.serialPort open];
 
 }
@@ -103,6 +108,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     [self.serialPort sendRequest:request];
 
     self.didInitialize = YES;
+    self.servoSpeed = ServoSpeedCasual;
     [self beginTimedUpdate];
     self.servoState = @"Idle";
 
@@ -112,7 +118,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     if (self.updateTimer) {
         return NO;
     }
-    
+
     self.updateTimer = CreateDispatchTimer(.05f, self.timerSerialQueue, ^{
         [self timedUpdate];
     });
@@ -133,7 +139,9 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
         dispatch_async(self.timerSerialQueue, ^{
             [self.serialPort sendRequest:[self updateCurrentPositionRequest]];
             [self.serialPort sendRequest:[self updateMotorTargetSpeedRequest]];
-            [self.serialPort sendRequest:[self updateServoWithTargetPositionRequest]];
+            if (self.didReceiveFirstPosition) {
+                [self.serialPort sendRequest:[self updateServoWithTargetPositionRequest]];
+            }
         });
     }
 }
@@ -188,8 +196,54 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     
 }
 
--(void)setServoTargetPosition:(int32_t)servoTargetPosition{
+-(void)setServoSpeed:(ServoSpeed)servoSpeed{
+    if (servoSpeed == ServoSpeedCasual) {
+        self.motorMaxSpeed = 400;
+    }
+    else if(servoSpeed == ServoSpeedHone){
+        self.motorMaxSpeed = 400;
+    }
+    else if(servoSpeed == ServoSpeedPlayback){
+        self.motorMaxSpeed = 3200;
+    }
+}
+
+-(void)setServoCurrentPosition:(NSInteger)servoCurrentPosition{
+    _servoCurrentPosition = servoCurrentPosition;
+    self.servoPositionDifference = self.servoTargetPosition - self.servoCurrentPosition;
+}
+
+-(void)setServoTargetPosition:(NSInteger)servoTargetPosition{
     _servoTargetPosition = servoTargetPosition;
+    self.servoPositionDifference = self.servoTargetPosition - self.servoCurrentPosition;
+}
+
+-(void)setMotorMaxSpeed:(NSInteger)motorMaxSpeed{
+    _motorMaxSpeed = motorMaxSpeed;
+    if (self.didInitialize) {
+        dispatch_async(self.timerSerialQueue, ^{
+            [self.serialPort sendRequest:[self updateServoWithMaxMotorSpeedRequest]];
+        });
+    }
+
+}
+
+-(ORSSerialRequest *)updateServoWithMaxMotorSpeedRequest{
+    Byte *maxMotorSpeedAsBytes = (Byte *)[self.class fourBytesFromLongInt:self.motorMaxSpeed].bytes;
+    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID),
+                                                             @(MocoJoServoSetMaxSpeed),
+                                                             @(maxMotorSpeedAsBytes[0]),
+                                                             @(maxMotorSpeedAsBytes[1]),
+                                                             @(maxMotorSpeedAsBytes[2]),
+                                                             @(maxMotorSpeedAsBytes[3])]];
+    ORSSerialRequest *request =
+    [ORSSerialRequest requestWithDataToSend:command
+                                   userInfo:@(MocoJoServoSetMaxSpeed)
+                            timeoutInterval:2
+                          responseEvaluator:nil];
+
+    return request;
+
 }
 
 -(void)serialPortWasOpened:(nonnull ORSSerialPort *)serialPort{
@@ -241,7 +295,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
         fourbytes[3] = responseBytes[5];
 
         self.servoCurrentPosition = [self.class longIntFromFourBytes:fourbytes];
-
+        if (!self.didReceiveFirstPosition) {
+            [VVApp endEditingInWindow:self.ownerWindow];
+            self.servoTargetPosition = self.servoCurrentPosition;
+            self.didReceiveFirstPosition = YES;
+        }
     }
     else if (requestID == MocoJoServoGetMotorTargetSpeed){
         Byte fourbytes[4];
@@ -254,14 +312,14 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     }
 }
 
-+(uint32_t)longIntFromFourBytes:(Byte *)fourBytes {
++(NSInteger)longIntFromFourBytes:(Byte *)fourBytes {
     return     ( (fourBytes[0] << 24)
                 + (fourBytes[1] << 16)
                 + (fourBytes[2] << 8)
                 + (fourBytes[3] ) );
 }
 
-+ (NSData *)fourBytesFromLongInt: (int32_t)longInt {
++ (NSData *)fourBytesFromLongInt: (NSInteger)longInt {
     unsigned char byteArray[4];
 
     // convert from an unsigned long int to a 4-byte array

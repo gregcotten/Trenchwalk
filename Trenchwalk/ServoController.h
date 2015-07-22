@@ -9,7 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <ORSSerialPort/ORSSerialPort.h>
 
+typedef NS_ENUM(NSInteger, ServoSpeed) {
+    ServoSpeedHone,
+    ServoSpeedPlayback,
+    ServoSpeedCasual
+};
+
 @interface ServoController : NSObject <ORSSerialPortDelegate>
+
 
 @property (strong) ORSSerialPort *serialPort;
 
@@ -19,9 +26,14 @@
 @property (assign) BOOL didInitialize;
 @property (assign) BOOL isInPlayback;
 
-@property (assign) int32_t servoCurrentPosition;
-@property (assign) int32_t motorTargetSpeed;
-@property (assign, nonatomic) int32_t servoTargetPosition;
+@property (assign, nonatomic) NSInteger servoCurrentPosition;
+@property (assign) NSInteger motorTargetSpeed;
+@property (assign, nonatomic) NSInteger servoTargetPosition;
+
+@property (assign) NSInteger servoPositionDifference;
+
+@property (assign, nonatomic) ServoSpeed servoSpeed;
+@property (nonatomic) NSInteger motorMaxSpeed;
 
 
 - (void)closeConnection;
