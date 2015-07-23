@@ -39,8 +39,6 @@ double clamp(double value, double min, double max){
 @property (assign) double playbackStartTime;
 @property (weak) IBOutlet NSWindow *ownerWindow;
 
-@property (assign) NSInteger previousSyncDistanceAway;
-
 @end
 
 @implementation ServoPlaybackController
@@ -171,7 +169,6 @@ double clamp(double value, double min, double max){
         self.servoController.servoSpeed = ServoSpeedPlayback;
     }
     
-    self.previousSyncDistanceAway = labs(self.servoController.servoCurrentPosition - self.endPosition);
     self.updateTimer = CreatePlaybackTimer(.05f, self.timerSerialQueue, ^{
         [self timedUpdate];
     });
@@ -205,14 +202,17 @@ double clamp(double value, double min, double max){
         self.servoController.servoTargetPosition = lerp(self.startPosition, self.endPosition, currentPlayheadTimeNormalized);
     }
     else if(self.playbackMode == PlaybackModeSpeed){
-        NSInteger currentDistanceAway = labs(self.servoController.servoCurrentPosition - self.endPosition);
-        
-        if (labs(self.endPosition-self.servoController.servoCurrentPosition) < 50 ||  currentDistanceAway - 10 /*give some buffer room*/ > self.previousSyncDistanceAway) {
+        BOOL movedPastEndPosition = NO;
+        if ((self.endPosition - self.startPosition > 0 && self.servoController.servoCurrentPosition > self.endPosition) || (self.endPosition - self.startPosition < 0 && self.servoController.servoCurrentPosition < self.endPosition)) {
+            movedPastEndPosition = YES;
+        }
+        if (labs(self.endPosition-self.servoController.servoCurrentPosition) < 50 || movedPastEndPosition) {
             [self stopPlayback];
             return;
         }
+        
+        
         self.servoController.servoTargetPosition = self.endPosition;
-        self.previousSyncDistanceAway = currentDistanceAway;
     }
     
 
