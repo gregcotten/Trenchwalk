@@ -63,7 +63,12 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     self.isConnecting = YES;
     //self.serialPort = [ORSSerialPort serialPortWithPath:@"/dev/cu.usbserial-A6009AXX"];
     
-    self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
+    //self.serialPort = (ORSSerialPort *)[[ORSSerialPortManager sharedSerialPortManager] availablePorts].firstObject;
+    
+    NSArray *dirFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"/dev/" error:nil];
+    NSArray *serialPorts = [dirFiles filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self BEGINSWITH 'cu.usbserial'"]];
+    
+    self.serialPort = [ORSSerialPort serialPortWithPath:[NSString stringWithFormat:@"/dev/%@", serialPorts.firstObject]];
     
     if (!self.serialPort) {
         return;
