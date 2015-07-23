@@ -188,6 +188,10 @@ double clamp(double value, double min, double max){
 }
 
 -(void)timedUpdate{
+    if (!self.servoController.isInPlayback) {
+        [self stopPlayback];
+        return;
+    }
     double elapsedTimeInSeconds = (CFAbsoluteTimeGetCurrent() - self.playbackStartTime);
     if (self.playbackMode == PlaybackModeDuration) {
         double currentPlayheadTimeNormalized = (elapsedTimeInSeconds)/self.playbackDurationInSeconds;
