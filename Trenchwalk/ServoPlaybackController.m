@@ -115,9 +115,16 @@ double clamp(double value, double min, double max){
 }
 
 -(void)prepAndStartPlayback{
-    if (self.updateTimer) {
+    if (!self.servoController.didInitialize || self.servoController.isInPlayback) {
+        [self stopPlayback];
+        NSLog(@"Tried to start playback when uninitialized or already playing back.");
         return;
     }
+    if (self.startPosition == self.endPosition) {
+        NSLog(@"in position = out position");
+        return;
+    }
+    
     if (!self.timerSerialQueue) {
         self.timerSerialQueue = dispatch_queue_create("Playback Timer Serial Dispatch", DISPATCH_QUEUE_SERIAL);
     }
