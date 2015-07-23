@@ -25,4 +25,6 @@ typedef NS_ENUM(NSInteger, PlaybackMode) {
 @property (assign, nonatomic) double playbackDurationInSeconds;
 @property (assign, nonatomic) double playbackMotorSpeed;
 
+-(void)stopPlayback;
+
 @end
