@@ -33,7 +33,8 @@ enum{
 enum{
 	MocoJoServoSetTargetPosition = 9,
 	MocoJoServoAddTargetPositionToBuffer = 10,
-	MocoJoServoSetMaxSpeed = 11
+	MocoJoServoSetMaxSpeed = 11,
+    MocoJoServoSetMinSpeed = 25
 };
 
 // Variable IDs

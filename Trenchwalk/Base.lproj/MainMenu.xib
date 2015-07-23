@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8121.20" systemVersion="15A216g" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <development version="6300" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8121.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -681,14 +682,14 @@
         <window title="Trenchwalk" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="382"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="contentRect" x="335" y="390" width="480" height="472"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="EiT-Mj-1SZ">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="382"/>
+                <rect key="frame" x="0.0" y="-1" width="480" height="472"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OLT-AQ-thb">
-                        <rect key="frame" x="18" y="345" width="54" height="17"/>
+                        <rect key="frame" x="18" y="435" width="54" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Current:" id="pMQ-Bf-UWY">
                             <font key="font" metaFont="system"/>
@@ -697,7 +698,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6PI-oU-Ozl">
-                        <rect key="frame" x="18" y="320" width="47" height="17"/>
+                        <rect key="frame" x="18" y="410" width="47" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target:" id="w3x-uw-ZkB">
                             <font key="font" metaFont="system"/>
@@ -706,7 +707,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Imw-Zk-po5">
-                        <rect key="frame" x="14" y="13" width="92" height="32"/>
+                        <rect key="frame" x="17" y="13" width="92" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S6J-6j-xdp">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -723,21 +724,21 @@
                         </connections>
                     </button>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="i6h-Yp-Bq0">
-                        <rect key="frame" x="-3" y="51" width="483" height="5"/>
+                        <rect key="frame" x="0.0" y="51" width="483" height="5"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <box verticalHuggingPriority="750" fixedFrame="YES" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DcG-e2-H2v">
-                        <rect key="frame" x="0.0" y="214" width="483" height="5"/>
+                        <rect key="frame" x="0.0" y="276" width="483" height="5"/>
                         <animations/>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <font key="titleFont" metaFont="system"/>
                     </box>
                     <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ioC-Ke-0nI">
-                        <rect key="frame" x="166" y="319" width="296" height="20"/>
+                        <rect key="frame" x="166" y="409" width="296" height="21"/>
                         <animations/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="-10000" maxValue="10000" tickMarkPosition="above" sliderType="linear" id="prO-xA-kAN"/>
                         <connections>
@@ -750,7 +751,7 @@
                         </connections>
                     </slider>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vrq-fJ-Wja">
-                        <rect key="frame" x="80" y="317" width="80" height="22"/>
+                        <rect key="frame" x="80" y="407" width="80" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="500,000" drawsBackground="YES" id="fVm-wd-k0O">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="FOo-DI-vGD"/>
@@ -768,7 +769,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MO3-So-TeC">
-                        <rect key="frame" x="82" y="345" width="114" height="17"/>
+                        <rect key="frame" x="82" y="435" width="114" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="yLc-9J-9iD">
                             <font key="font" metaFont="system"/>
@@ -780,7 +781,7 @@
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T6N-fX-Cvz">
-                        <rect key="frame" x="14" y="13" width="110" height="32"/>
+                        <rect key="frame" x="17" y="13" width="110" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Disconnect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="XRl-Ya-r11">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -796,7 +797,7 @@
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cik-U7-A7K">
-                        <rect key="frame" x="124" y="23" width="47" height="17"/>
+                        <rect key="frame" x="127" y="23" width="47" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status:" id="JV7-1D-YcY">
                             <font key="font" metaFont="system"/>
@@ -805,7 +806,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="afR-wF-rUn">
-                        <rect key="frame" x="172" y="23" width="309" height="17"/>
+                        <rect key="frame" x="175" y="23" width="309" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Status" id="K6k-p3-7ic">
                             <font key="font" metaFont="system"/>
@@ -817,7 +818,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ijr-Z0-bhN">
-                        <rect key="frame" x="154" y="270" width="115" height="17"/>
+                        <rect key="frame" x="154" y="360" width="115" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="XXR-MP-AJ5">
                             <font key="font" metaFont="system"/>
@@ -829,7 +830,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ga2-5c-uhq">
-                        <rect key="frame" x="19" y="270" width="129" height="17"/>
+                        <rect key="frame" x="19" y="360" width="129" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Target Motor Speed:" id="nHR-rq-NbM">
                             <font key="font" metaFont="system"/>
@@ -837,17 +838,8 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eDj-DI-Hkc">
-                        <rect key="frame" x="19" y="245" width="115" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Motor Max Speed:" id="8Ja-z0-juu">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CcB-u4-vY9">
-                        <rect key="frame" x="101" y="152" width="31" height="17"/>
+                        <rect key="frame" x="101" y="214" width="31" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Out:" id="hhQ-MQ-jWo">
                             <font key="font" metaFont="system"/>
@@ -856,7 +848,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTF-u6-O7Z">
-                        <rect key="frame" x="136" y="152" width="121" height="17"/>
+                        <rect key="frame" x="136" y="214" width="121" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="kvb-c2-Edc">
                             <font key="font" metaFont="system"/>
@@ -868,7 +860,7 @@
                         </connections>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UtD-cX-H4F">
-                        <rect key="frame" x="14" y="174" width="75" height="32"/>
+                        <rect key="frame" x="14" y="236" width="75" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Set In" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bxG-5A-AFw">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -879,7 +871,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h4K-ST-x1s">
-                        <rect key="frame" x="14" y="143" width="87" height="32"/>
+                        <rect key="frame" x="14" y="205" width="87" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Set Out" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sqe-GQ-aUA">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -890,7 +882,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9oT-Ty-vPb">
-                        <rect key="frame" x="14" y="110" width="128" height="32"/>
+                        <rect key="frame" x="14" y="82" width="128" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Start Playback" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4iF-8v-cr9">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -898,16 +890,12 @@
                         </buttonCell>
                         <connections>
                             <action selector="startPlaybackButton:" target="VwU-mX-Bkf" id="vqr-89-J22"/>
-                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="k1i-Hp-WiO" id="COz-gy-kWe"/>
-                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="k1i-Hp-WiO">
-                                <dictionary key="options">
-                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
-                                </dictionary>
-                            </binding>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="Dro-aq-KEA"/>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="Dro-aq-KEA" id="Aeu-sw-WZg"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mjm-dX-fTV">
-                        <rect key="frame" x="15" y="110" width="127" height="32"/>
+                        <rect key="frame" x="15" y="82" width="127" height="32"/>
                         <animations/>
                         <buttonCell key="cell" type="push" title="Stop Playback" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="udV-te-dcY">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -915,16 +903,16 @@
                         </buttonCell>
                         <connections>
                             <action selector="stopPlaybackButton:" target="VwU-mX-Bkf" id="PDH-Gb-ybf"/>
-                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="w5y-iS-ruJ" id="mXl-RK-jOV">
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.didInitialize" id="VHo-5Z-8dP"/>
+                            <binding destination="ABt-hI-Hoj" name="hidden" keyPath="self.isInPlayback" previousBinding="VHo-5Z-8dP" id="fZp-n9-gT5">
                                 <dictionary key="options">
                                     <string key="NSValueTransformerName">NSNegateBoolean</string>
                                 </dictionary>
                             </binding>
-                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="w5y-iS-ruJ"/>
                         </connections>
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kq7-jl-O5I">
-                        <rect key="frame" x="142" y="120" width="114" height="17"/>
+                        <rect key="frame" x="18" y="187" width="114" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Playback Duration" id="emw-Zi-Jao">
                             <font key="font" metaFont="system"/>
@@ -933,7 +921,7 @@
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WHf-2m-ZQM">
-                        <rect key="frame" x="262" y="117" width="61" height="22"/>
+                        <rect key="frame" x="138" y="184" width="61" height="22"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="10" drawsBackground="YES" id="KQ6-Cn-BD7">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="lae-6U-HQZ">
@@ -953,7 +941,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MMd-vL-pcD">
-                        <rect key="frame" x="331" y="120" width="56" height="17"/>
+                        <rect key="frame" x="207" y="187" width="56" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="seconds" id="nXc-LH-y83">
                             <font key="font" metaFont="system"/>
@@ -961,20 +949,51 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4y-GK-JDM">
-                        <rect key="frame" x="139" y="245" width="79" height="17"/>
-                        <animations/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="rja-Mr-XfD">
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uK-iw-0pd">
+                        <rect key="frame" x="19" y="157" width="114" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Playback Speed" id="Phi-2M-KWA">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hUm-VH-tXc">
+                        <rect key="frame" x="19" y="123" width="114" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Playback Mode" id="aD3-Hm-Xuu">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K3J-3e-7Ey">
+                        <rect key="frame" x="137" y="154" width="61" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="800" drawsBackground="YES" id="krw-WV-PU1">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="tN1-Xe-660">
+                                <real key="minimum" value="2"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
                         <connections>
-                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.motorMaxSpeed" id="q48-b9-e4C"/>
+                            <binding destination="ABt-hI-Hoj" name="enabled" keyPath="self.isInPlayback" id="hjG-XX-gxl">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                            <binding destination="VwU-mX-Bkf" name="value" keyPath="self.playbackMotorSpeed" id="A6e-5g-t9a"/>
                         </connections>
                     </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eHK-AL-HaX">
+                        <rect key="frame" x="206" y="157" width="56" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="units" id="39A-Ss-tMd">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5V-Ke-Aqw">
-                        <rect key="frame" x="20" y="295" width="71" height="17"/>
+                        <rect key="frame" x="20" y="385" width="71" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Difference:" id="9gm-BJ-pLf">
                             <font key="font" metaFont="system"/>
@@ -983,7 +1002,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iIt-na-ON5">
-                        <rect key="frame" x="96" y="295" width="100" height="17"/>
+                        <rect key="frame" x="96" y="385" width="100" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="49c-bO-vCq">
                             <font key="font" metaFont="system"/>
@@ -995,7 +1014,7 @@
                         </connections>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vSi-YS-OMg">
-                        <rect key="frame" x="89" y="183" width="19" height="17"/>
+                        <rect key="frame" x="89" y="245" width="19" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="In:" id="xTd-bg-c0Z">
                             <font key="font" metaFont="system"/>
@@ -1004,7 +1023,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1z1-hi-vVR">
-                        <rect key="frame" x="112" y="183" width="88" height="17"/>
+                        <rect key="frame" x="112" y="245" width="88" height="17"/>
                         <animations/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="h3k-9h-Xmh">
                             <font key="font" metaFont="system"/>
@@ -1015,10 +1034,77 @@
                             <binding destination="VwU-mX-Bkf" name="value" keyPath="self.startPosition" id="6aa-8X-Afs"/>
                         </connections>
                     </textField>
+                    <matrix verticalHuggingPriority="750" fixedFrame="YES" allowsEmptySelection="NO" autorecalculatesCellSize="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7k3-6f-NdM">
+                        <rect key="frame" x="136" y="122" width="200" height="18"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        <size key="cellSize" width="98" height="18"/>
+                        <size key="intercellSpacing" width="4" height="2"/>
+                        <buttonCell key="prototype" type="radio" title="Radio" imagePosition="left" alignment="left" inset="2" id="cxB-VN-Fo1">
+                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <cells>
+                            <column>
+                                <buttonCell type="radio" title="Duration" imagePosition="left" alignment="left" state="on" tag="1" inset="2" id="t0w-Qk-Y2H">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </column>
+                            <column>
+                                <buttonCell type="radio" title="Speed" imagePosition="left" alignment="left" inset="2" id="SRb-te-vxc">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </column>
+                        </cells>
+                        <connections>
+                            <binding destination="VwU-mX-Bkf" name="selectedIndex" keyPath="self.playbackMode" id="NXa-uQ-7rJ"/>
+                        </connections>
+                    </matrix>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eDj-DI-Hkc">
+                        <rect key="frame" x="18" y="312" width="115" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Motor Max Speed:" id="8Ja-z0-juu">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y4y-GK-JDM">
+                        <rect key="frame" x="138" y="312" width="79" height="17"/>
+                        <animations/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="0" id="rja-Mr-XfD">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.motorMaxSpeed" id="q48-b9-e4C"/>
+                        </connections>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R9N-2a-tHH">
+                        <rect key="frame" x="19" y="335" width="115" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Motor Min Speed:" id="7NI-U4-9vE">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAy-Jc-P99">
+                        <rect key="frame" x="139" y="335" width="79" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="0" id="Ub5-Vn-XkL">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="ABt-hI-Hoj" name="value" keyPath="self.motorMinSpeed" id="mWR-DE-exl"/>
+                        </connections>
+                    </textField>
                 </subviews>
                 <animations/>
             </view>
-            <point key="canvasLocation" x="38" y="318"/>
+            <point key="canvasLocation" x="38" y="363"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="MSF-rx-dtf"/>
     </objects>

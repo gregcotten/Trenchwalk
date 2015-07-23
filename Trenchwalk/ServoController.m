@@ -198,12 +198,15 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 
 -(void)setServoSpeed:(ServoSpeed)servoSpeed{
     if (servoSpeed == ServoSpeedCasual) {
+        self.motorMinSpeed = 0;
         self.motorMaxSpeed = 400;
     }
     else if(servoSpeed == ServoSpeedHone){
+        self.motorMinSpeed = 0;
         self.motorMaxSpeed = 400;
     }
     else if(servoSpeed == ServoSpeedPlayback){
+        self.motorMinSpeed = 0;
         self.motorMaxSpeed = 3200;
     }
 }
@@ -226,6 +229,33 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
         });
     }
 
+}
+
+-(void)setMotorMinSpeed:(NSInteger)motorMinSpeed{
+    _motorMinSpeed = motorMinSpeed;
+    if (self.didInitialize) {
+        dispatch_async(self.timerSerialQueue, ^{
+            [self.serialPort sendRequest:[self updateServoWithMinMotorSpeedRequest]];
+        });
+    }
+}
+
+-(ORSSerialRequest *)updateServoWithMinMotorSpeedRequest{
+    Byte *minMotorSpeedAsBytes = (Byte *)[self.class fourBytesFromLongInt:self.motorMinSpeed].bytes;
+    NSData *command = [self.class servoDataPacketFromArray:@[@(self.servoID),
+                                                             @(MocoJoServoSetMinSpeed),
+                                                             @(minMotorSpeedAsBytes[0]),
+                                                             @(minMotorSpeedAsBytes[1]),
+                                                             @(minMotorSpeedAsBytes[2]),
+                                                             @(minMotorSpeedAsBytes[3])]];
+    ORSSerialRequest *request =
+    [ORSSerialRequest requestWithDataToSend:command
+                                   userInfo:@(MocoJoServoSetMinSpeed)
+                            timeoutInterval:2
+                          responseEvaluator:nil];
+    
+    return request;
+    
 }
 
 -(ORSSerialRequest *)updateServoWithMaxMotorSpeedRequest{

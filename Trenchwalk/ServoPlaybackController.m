@@ -39,6 +39,8 @@ double clamp(double value, double min, double max){
 @property (assign) double playbackStartTime;
 @property (weak) IBOutlet NSWindow *ownerWindow;
 
+@property (assign) NSInteger previousSyncDistanceAway;
+
 @end
 
 @implementation ServoPlaybackController
@@ -59,6 +61,59 @@ double clamp(double value, double min, double max){
 
 -(IBAction)stopPlaybackButton:(id)sender{
     [self stopPlayback];
+}
+
+-(void)setStartPosition:(NSInteger)startPosition{
+    if (self.servoController.isInPlayback) {
+        return;
+    }
+    else{
+        _startPosition = startPosition;
+    }
+}
+
+-(void)setEndPosition:(NSInteger)endPosition{
+    if (self.servoController.isInPlayback) {
+        return;
+    }
+    else{
+        _endPosition = endPosition;
+    }
+}
+
+- (void)setPlaybackDurationInSeconds:(double)playbackDurationInSeconds{
+    if (self.servoController.isInPlayback) {
+        return;
+    }
+    else{
+        _playbackDurationInSeconds = playbackDurationInSeconds;
+    }
+}
+
+- (void)setPlaybackMotorSpeed:(double)playbackMotorSpeed{
+    if (self.servoController.isInPlayback) {
+        return;
+    }
+    else{
+        _playbackMotorSpeed = clamp(playbackMotorSpeed, 0, 3200);
+    }
+}
+
+- (void)setPlaybackMode:(PlaybackMode)playbackMode{
+    if (self.servoController.isInPlayback) {
+        return;
+    }
+    else{
+        _playbackMode = playbackMode;
+    }
+}
+
+-(instancetype)init{
+    if (self = [super init]) {
+        self.playbackDurationInSeconds = 10;
+        self.playbackMotorSpeed = 400;
+    }
+    return self;
 }
 
 -(void)prepAndStartPlayback{
@@ -87,7 +142,7 @@ double clamp(double value, double min, double max){
             if (!self.servoController.isInPlayback) {
                 return;
             }
-
+            
             self.servoController.servoState = @"Waiting a sec before playback";
             [NSTimer scheduledTimerWithTimeInterval:2
                                              target:self
@@ -106,8 +161,17 @@ double clamp(double value, double min, double max){
     }
     self.playbackStartTime = CFAbsoluteTimeGetCurrent();
     self.servoController.servoState = @"Playing back";
-    self.servoController.servoSpeed = ServoSpeedPlayback;
-
+    
+    
+    if (self.playbackMode == PlaybackModeSpeed) {
+        self.servoController.motorMinSpeed = self.playbackMotorSpeed;
+        self.servoController.motorMaxSpeed = self.playbackMotorSpeed;
+    }
+    else if(self.playbackMode == PlaybackModeDuration){
+        self.servoController.servoSpeed = ServoSpeedPlayback;
+    }
+    
+    self.previousSyncDistanceAway = labs(self.servoController.servoCurrentPosition - self.endPosition);
     self.updateTimer = CreatePlaybackTimer(.05f, self.timerSerialQueue, ^{
         [self timedUpdate];
     });
@@ -127,16 +191,30 @@ double clamp(double value, double min, double max){
 }
 
 -(void)timedUpdate{
-    double currentPlayheadTimeNormalized = (CFAbsoluteTimeGetCurrent() - self.playbackStartTime)/self.playbackDurationInSeconds;
-
-    if (currentPlayheadTimeNormalized > 1.0 || !self.servoController.isInPlayback) {
-        [self stopPlayback];
-        return;
+    double elapsedTimeInSeconds = (CFAbsoluteTimeGetCurrent() - self.playbackStartTime);
+    if (self.playbackMode == PlaybackModeDuration) {
+        double currentPlayheadTimeNormalized = (elapsedTimeInSeconds)/self.playbackDurationInSeconds;
+        
+        if (currentPlayheadTimeNormalized > 1.0 || !self.servoController.isInPlayback) {
+            [self stopPlayback];
+            return;
+        }
+        
+        currentPlayheadTimeNormalized = clamp(currentPlayheadTimeNormalized, 0, 1);
+        
+        self.servoController.servoTargetPosition = lerp(self.startPosition, self.endPosition, currentPlayheadTimeNormalized);
     }
-
-    currentPlayheadTimeNormalized = clamp(currentPlayheadTimeNormalized, 0, 1);
-
-    self.servoController.servoTargetPosition = lerp(self.startPosition, self.endPosition, currentPlayheadTimeNormalized);
+    else if(self.playbackMode == PlaybackModeSpeed){
+        NSInteger currentDistanceAway = labs(self.servoController.servoCurrentPosition - self.endPosition);
+        
+        if (labs(self.endPosition-self.servoController.servoCurrentPosition) < 50 ||  currentDistanceAway - 10 /*give some buffer room*/ > self.previousSyncDistanceAway) {
+            [self stopPlayback];
+            return;
+        }
+        self.servoController.servoTargetPosition = self.endPosition;
+        self.previousSyncDistanceAway = currentDistanceAway;
+    }
+    
 
 }
 

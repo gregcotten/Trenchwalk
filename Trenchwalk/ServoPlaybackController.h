@@ -9,13 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "ServoController.h"
 
+typedef NS_ENUM(NSInteger, PlaybackMode) {
+    PlaybackModeDuration,
+    PlaybackModeSpeed
+};
+
 @interface ServoPlaybackController : NSObject
 
 @property (weak) IBOutlet ServoController *servoController;
 
-@property (assign) NSInteger startPosition;
-@property (assign) NSInteger endPosition;
+@property (assign, nonatomic) NSInteger startPosition;
+@property (assign, nonatomic) NSInteger endPosition;
 
-@property (assign) double playbackDurationInSeconds;
+@property (assign, nonatomic) PlaybackMode playbackMode;
+@property (assign, nonatomic) double playbackDurationInSeconds;
+@property (assign, nonatomic) double playbackMotorSpeed;
 
 @end

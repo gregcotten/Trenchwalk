@@ -33,7 +33,9 @@ typedef NS_ENUM(NSInteger, ServoSpeed) {
 @property (assign) NSInteger servoPositionDifference;
 
 @property (assign, nonatomic) ServoSpeed servoSpeed;
-@property (nonatomic) NSInteger motorMaxSpeed;
+
+@property (assign, nonatomic) NSInteger motorMinSpeed;
+@property (assign, nonatomic) NSInteger motorMaxSpeed;
 
 
 - (void)closeConnection;
