@@ -204,11 +204,11 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
 -(void)setServoSpeed:(ServoSpeed)servoSpeed{
     if (servoSpeed == ServoSpeedCasual) {
         self.motorMinSpeed = 0;
-        self.motorMaxSpeed = 400;
+        self.motorMaxSpeed = 600;
     }
     else if(servoSpeed == ServoSpeedHone){
         self.motorMinSpeed = 0;
-        self.motorMaxSpeed = 400;
+        self.motorMaxSpeed = 800;
     }
     else if(servoSpeed == ServoSpeedPlayback){
         self.motorMinSpeed = 0;

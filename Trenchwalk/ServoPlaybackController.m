@@ -138,7 +138,7 @@ double clamp(double value, double min, double max){
         self.servoController.servoTargetPosition = self.startPosition;
         self.servoController.servoState = @"Honing";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        while (labs(self.servoController.servoCurrentPosition - self.startPosition) > 50 && self.servoController.isInPlayback) {
+        while (labs(self.servoController.servoCurrentPosition - self.startPosition) > 200 && self.servoController.isInPlayback) {
                 //wait and hone that temp
         }
 
@@ -148,8 +148,8 @@ double clamp(double value, double min, double max){
                 return;
             }
             
-            self.servoController.servoState = @"Waiting a sec before playback";
-            [NSTimer scheduledTimerWithTimeInterval:2
+            self.servoController.servoState = @"Waiting a 3 seconds before playback...";
+            [NSTimer scheduledTimerWithTimeInterval:3
                                              target:self
                                            selector:@selector(startPlayback:)
                                            userInfo:nil
