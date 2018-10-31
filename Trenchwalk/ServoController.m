@@ -208,7 +208,7 @@ dispatch_source_t CreateDispatchTimer(double interval, dispatch_queue_t queue, d
     }
     else if(servoSpeed == ServoSpeedHone){
         self.motorMinSpeed = 0;
-        self.motorMaxSpeed = 800;
+        self.motorMaxSpeed = 700;
     }
     else if(servoSpeed == ServoSpeedPlayback){
         self.motorMinSpeed = 0;

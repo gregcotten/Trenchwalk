@@ -10,6 +10,23 @@
 #import <Cocoa/Cocoa.h>
 #import "VVApp.h"
 
+double CubicEaseOut( double t, double b, double c, double d )
+{
+    t = t/d -1;
+    return c * ( ( t ) * t * t + 1 ) + b;
+}
+
+float easeInOut(float t,float b , float c, float d) {
+    t/=d/2;
+    if ((t) < 1) return c/2*t*t*t + b;
+    t-=2;
+    return c/2*((t)*t*t + 2) + b;
+}
+
+float sinEaseInOut(float t,float b , float c, float d) {
+    return -c/2 * (cos(M_PI*t/d) - 1) + b;
+}
+
 dispatch_source_t CreatePlaybackTimer(double interval, dispatch_queue_t queue, dispatch_block_t block)
 {
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
@@ -209,8 +226,11 @@ double clamp(double value, double min, double max){
         }
         
         currentPlayheadTimeNormalized = clamp(currentPlayheadTimeNormalized, 0, 1);
-        
-        self.servoController.servoTargetPosition = lerp(self.startPosition, self.endPosition, currentPlayheadTimeNormalized);
+
+//        self.servoController.servoTargetPosition = lerp(self.startPosition, self.endPosition, currentPlayheadTimeNormalized);
+
+        self.servoController.servoTargetPosition = sinEaseInOut(currentPlayheadTimeNormalized, self.startPosition, self.endPosition-self.startPosition, 1);
+
     }
     else if(self.playbackMode == PlaybackModeSpeed){
         BOOL movedPastEndPosition = NO;
